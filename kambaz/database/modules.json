@@ -1,0 +1,212 @@
+[
+  {
+    "_id": "M101",
+    "course": "RS101",
+    "name": "Week 1",
+    "lessons": [
+      { "_id": "L101", "name": "LEARNING OBJECTIVES" },
+      { "_id": "L102", "name": "Introduction to the course" },
+      { "_id": "L103", "name": "Learn what is Web Development" }
+    ]
+  },
+  {
+    "_id": "M102",
+    "course": "RS101",
+    "name": "Week 2",
+    "lessons": [
+      { "_id": "L104", "name": "READING" },
+      { "_id": "L105", "name": "Introduction to CSS" },
+      { "_id": "L106", "name": "Styling with Bootstrap" }
+    ]
+  },
+  {
+    "_id": "M103",
+    "course": "RS101",
+    "name": "Week 3",
+    "lessons": [
+      { "_id": "L107", "name": "JavaScript fundamentals" },
+      { "_id": "L108", "name": "Arrays and objects" },
+      { "_id": "L109", "name": "Functions and ES6" }
+    ]
+  },
+  {
+    "_id": "M201",
+    "course": "RS102",
+    "name": "Week 1",
+    "lessons": [
+      { "_id": "L201", "name": "Node runtime and npm" },
+      { "_id": "L202", "name": "Express fundamentals" },
+      { "_id": "L203", "name": "Routing and middleware" }
+    ]
+  },
+  {
+    "_id": "M202",
+    "course": "RS102",
+    "name": "Week 2",
+    "lessons": [
+      { "_id": "L204", "name": "RESTful patterns" },
+      { "_id": "L205", "name": "Request validation" },
+      { "_id": "L206", "name": "Error handling" }
+    ]
+  },
+  {
+    "_id": "M203",
+    "course": "RS102",
+    "name": "Week 3",
+    "lessons": [
+      { "_id": "L207", "name": "Authentication basics" },
+      { "_id": "L208", "name": "Testing APIs" },
+      { "_id": "L209", "name": "Deployment checklist" }
+    ]
+  },
+  {
+    "_id": "M301",
+    "course": "RS103",
+    "name": "Week 1",
+    "lessons": [
+      { "_id": "L301", "name": "NoSQL data modeling" },
+      { "_id": "L302", "name": "Collections and documents" },
+      { "_id": "L303", "name": "Indexing strategies" }
+    ]
+  },
+  {
+    "_id": "M302",
+    "course": "RS103",
+    "name": "Week 2",
+    "lessons": [
+      { "_id": "L304", "name": "CRUD with MongoDB" },
+      { "_id": "L305", "name": "Aggregation pipeline" },
+      { "_id": "L306", "name": "Schema validation" }
+    ]
+  },
+  {
+    "_id": "M303",
+    "course": "RS103",
+    "name": "Week 3",
+    "lessons": [
+      { "_id": "L307", "name": "Atlas basics" },
+      { "_id": "L308", "name": "Performance tuning" },
+      { "_id": "L309", "name": "Backup and restore" }
+    ]
+  },
+  {
+    "_id": "M401",
+    "course": "RS104",
+    "name": "Week 1",
+    "lessons": [
+      { "_id": "L401", "name": "Types and interfaces" },
+      { "_id": "L402", "name": "Generics" },
+      { "_id": "L403", "name": "Type narrowing" }
+    ]
+  },
+  {
+    "_id": "M402",
+    "course": "RS104",
+    "name": "Week 2",
+    "lessons": [
+      { "_id": "L404", "name": "Utility types" },
+      { "_id": "L405", "name": "Discriminated unions" },
+      { "_id": "L406", "name": "Type-safe APIs" }
+    ]
+  },
+  {
+    "_id": "M403",
+    "course": "RS104",
+    "name": "Week 3",
+    "lessons": [
+      { "_id": "L407", "name": "TypeScript tooling" },
+      { "_id": "L408", "name": "Linting and formatting" },
+      { "_id": "L409", "name": "Build pipelines" }
+    ]
+  },
+  {
+    "_id": "M501",
+    "course": "RS105",
+    "name": "Week 1",
+    "lessons": [
+      { "_id": "L501", "name": "Express routing" },
+      { "_id": "L502", "name": "Middleware patterns" },
+      { "_id": "L503", "name": "Controllers and services" }
+    ]
+  },
+  {
+    "_id": "M502",
+    "course": "RS105",
+    "name": "Week 2",
+    "lessons": [
+      { "_id": "L504", "name": "Error handling" },
+      { "_id": "L505", "name": "Async flows" },
+      { "_id": "L506", "name": "Validation" }
+    ]
+  },
+  {
+    "_id": "M503",
+    "course": "RS105",
+    "name": "Week 3",
+    "lessons": [
+      { "_id": "L507", "name": "Auth basics" },
+      { "_id": "L508", "name": "Session management" },
+      { "_id": "L509", "name": "Deployment" }
+    ]
+  },
+  {
+    "_id": "M601",
+    "course": "RS106",
+    "name": "Week 1",
+    "lessons": [
+      { "_id": "L601", "name": "File-system routing" },
+      { "_id": "L602", "name": "Layouts and navigation" },
+      { "_id": "L603", "name": "Server and client components" }
+    ]
+  },
+  {
+    "_id": "M602",
+    "course": "RS106",
+    "name": "Week 2",
+    "lessons": [
+      { "_id": "L604", "name": "Data fetching" },
+      { "_id": "L605", "name": "Caching" },
+      { "_id": "L606", "name": "Route handlers" }
+    ]
+  },
+  {
+    "_id": "M603",
+    "course": "RS106",
+    "name": "Week 3",
+    "lessons": [
+      { "_id": "L607", "name": "Deployment to Vercel" },
+      { "_id": "L608", "name": "Performance" },
+      { "_id": "L609", "name": "Monitoring" }
+    ]
+  },
+  {
+    "_id": "M701",
+    "course": "RS107",
+    "name": "Week 1",
+    "lessons": [
+      { "_id": "L701", "name": "Web architecture" },
+      { "_id": "L702", "name": "HTTP fundamentals" },
+      { "_id": "L703", "name": "Browser rendering" }
+    ]
+  },
+  {
+    "_id": "M702",
+    "course": "RS107",
+    "name": "Week 2",
+    "lessons": [
+      { "_id": "L704", "name": "Accessibility" },
+      { "_id": "L705", "name": "Responsive design" },
+      { "_id": "L706", "name": "Design systems" }
+    ]
+  },
+  {
+    "_id": "M703",
+    "course": "RS107",
+    "name": "Week 3",
+    "lessons": [
+      { "_id": "L707", "name": "Project planning" },
+      { "_id": "L708", "name": "Testing basics" },
+      { "_id": "L709", "name": "Launch checklist" }
+    ]
+  }
+]

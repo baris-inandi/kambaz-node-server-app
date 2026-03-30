@@ -1,0 +1,65 @@
+[
+  {
+    "_id": "RS101",
+    "number": "CS1234",
+    "name": "React JS",
+    "description": "Full Stack software developer",
+    "startDate": "2024-01-10",
+    "endDate": "2024-05-15",
+    "image": "/images/reactjs.jpg"
+  },
+  {
+    "_id": "RS102",
+    "number": "CS5678",
+    "name": "Node.js",
+    "description": "Server-side JavaScript development",
+    "startDate": "2024-01-10",
+    "endDate": "2024-05-15",
+    "image": "/images/reactjs.jpg"
+  },
+  {
+    "_id": "RS103",
+    "number": "CS9012",
+    "name": "MongoDB",
+    "description": "Database management and design",
+    "startDate": "2024-01-10",
+    "endDate": "2024-05-15",
+    "image": "/images/reactjs.jpg"
+  },
+  {
+    "_id": "RS104",
+    "number": "CS3456",
+    "name": "TypeScript",
+    "description": "Type-safe JavaScript development",
+    "startDate": "2024-01-10",
+    "endDate": "2024-05-15",
+    "image": "/images/reactjs.jpg"
+  },
+  {
+    "_id": "RS105",
+    "number": "CS7890",
+    "name": "Express.js",
+    "description": "Web application framework",
+    "startDate": "2024-01-10",
+    "endDate": "2024-05-15",
+    "image": "/images/reactjs.jpg"
+  },
+  {
+    "_id": "RS106",
+    "number": "CS2468",
+    "name": "Next.js",
+    "description": "React framework for production",
+    "startDate": "2024-01-10",
+    "endDate": "2024-05-15",
+    "image": "/images/reactjs.jpg"
+  },
+  {
+    "_id": "RS107",
+    "number": "CS1357",
+    "name": "Web Development",
+    "description": "Complete web development course",
+    "startDate": "2024-01-10",
+    "endDate": "2024-05-15",
+    "image": "/images/reactjs.jpg"
+  }
+]
