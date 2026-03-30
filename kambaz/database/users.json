@@ -124,5 +124,19 @@
     "role": "STUDENT",
     "lastActivity": "2024-02-07",
     "totalActivity": "08:03:18"
+  },
+  {
+    "_id": "999",
+    "firstName": "Tony",
+    "lastName": "Stark",
+    "loginId": "001234568S",
+    "username": "iron_man",
+    "password": "stark123",
+    "email": "iron_man@avengers.com",
+    "dob": "1970-05-29",
+    "section": "S101",
+    "role": "STUDENT",
+    "lastActivity": "2024-02-08",
+    "totalActivity": "10:45:00"
   }
 ]
