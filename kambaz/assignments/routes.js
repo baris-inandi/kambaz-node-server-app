@@ -1,14 +1,15 @@
 import AssignmentsDao from "./dao.js";
 
-export default function AssignmentsRoutes(app, db) {
-  const dao = AssignmentsDao(db);
+export default function AssignmentsRoutes(app) {
+  const dao = AssignmentsDao();
 
-  app.get("/api/courses/:courseId/assignments", (req, res) => {
-    res.json(dao.findAssignmentsForCourse(req.params.courseId));
+  app.get("/api/courses/:courseId/assignments", async (req, res) => {
+    const assignments = await dao.findAssignmentsForCourse(req.params.courseId);
+    res.json(assignments);
   });
 
-  app.get("/api/assignments/:assignmentId", (req, res) => {
-    const assignment = dao.findAssignmentById(req.params.assignmentId);
+  app.get("/api/assignments/:assignmentId", async (req, res) => {
+    const assignment = await dao.findAssignmentById(req.params.assignmentId);
     if (!assignment) {
       res.sendStatus(404);
       return;
@@ -16,16 +17,16 @@ export default function AssignmentsRoutes(app, db) {
     res.json(assignment);
   });
 
-  app.post("/api/courses/:courseId/assignments", (req, res) => {
-    const assignment = dao.createAssignment({
+  app.post("/api/courses/:courseId/assignments", async (req, res) => {
+    const assignment = await dao.createAssignment({
       ...req.body,
       course: req.params.courseId,
     });
     res.json(assignment);
   });
 
-  app.put("/api/assignments/:assignmentId", (req, res) => {
-    const updatedAssignment = dao.updateAssignment(
+  app.put("/api/assignments/:assignmentId", async (req, res) => {
+    const updatedAssignment = await dao.updateAssignment(
       req.params.assignmentId,
       req.body,
     );
@@ -36,7 +37,8 @@ export default function AssignmentsRoutes(app, db) {
     res.json(updatedAssignment);
   });
 
-  app.delete("/api/assignments/:assignmentId", (req, res) => {
-    res.json(dao.deleteAssignment(req.params.assignmentId));
+  app.delete("/api/assignments/:assignmentId", async (req, res) => {
+    const status = await dao.deleteAssignment(req.params.assignmentId);
+    res.json(status);
   });
 }

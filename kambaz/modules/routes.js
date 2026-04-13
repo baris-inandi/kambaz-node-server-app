@@ -1,22 +1,24 @@
 import ModulesDao from "./dao.js";
 
-export default function ModulesRoutes(app, db) {
-  const dao = ModulesDao(db);
+export default function ModulesRoutes(app) {
+  const dao = ModulesDao();
 
-  app.get("/api/courses/:courseId/modules", (req, res) => {
-    res.json(dao.findModulesForCourse(req.params.courseId));
+  app.get("/api/courses/:courseId/modules", async (req, res) => {
+    const modules = await dao.findModulesForCourse(req.params.courseId);
+    res.json(modules);
   });
 
-  app.post("/api/courses/:courseId/modules", (req, res) => {
-    const newModule = dao.createModule({
-      ...req.body,
-      course: req.params.courseId,
-    });
+  app.post("/api/courses/:courseId/modules", async (req, res) => {
+    const newModule = await dao.createModule(req.params.courseId, req.body);
     res.json(newModule);
   });
 
-  app.put("/api/modules/:moduleId", (req, res) => {
-    const updatedModule = dao.updateModule(req.params.moduleId, req.body);
+  app.put("/api/courses/:courseId/modules/:moduleId", async (req, res) => {
+    const updatedModule = await dao.updateModule(
+      req.params.courseId,
+      req.params.moduleId,
+      req.body,
+    );
     if (!updatedModule) {
       res.sendStatus(404);
       return;
@@ -24,7 +26,11 @@ export default function ModulesRoutes(app, db) {
     res.json(updatedModule);
   });
 
-  app.delete("/api/modules/:moduleId", (req, res) => {
-    res.json(dao.deleteModule(req.params.moduleId));
+  app.delete("/api/courses/:courseId/modules/:moduleId", async (req, res) => {
+    const status = await dao.deleteModule(
+      req.params.courseId,
+      req.params.moduleId,
+    );
+    res.json(status);
   });
 }
