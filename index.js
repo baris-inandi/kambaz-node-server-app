@@ -15,8 +15,6 @@ const app = express();
 const CONNECTION_STRING =
   process.env.DATABASE_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kambaz";
 
-mongoose.connect(CONNECTION_STRING);
-
 app.use(
   cors({
     credentials: true,
@@ -51,6 +49,17 @@ Lab5(app);
 Hello(app);
 
 const port = process.env.PORT || 4000;
-app.listen(port, () => {
-  console.log(`Kambaz server listening on port ${port}`);
-});
+
+async function startServer() {
+  try {
+    await mongoose.connect(CONNECTION_STRING);
+    app.listen(port, () => {
+      console.log(`Kambaz server listening on port ${port}`);
+    });
+  } catch (error) {
+    console.error("Failed to connect to MongoDB", error);
+    process.exit(1);
+  }
+}
+
+startServer();
