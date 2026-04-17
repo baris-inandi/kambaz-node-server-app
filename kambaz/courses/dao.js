@@ -1,10 +1,12 @@
 import { v4 as uuidv4 } from "uuid";
 import AssignmentModel from "../assignments/model.js";
 import PazzaPostModel from "../pazza/model.js";
+import QuizzesDao from "../quizzes/dao.js";
 import model from "./model.js";
 import { cloneDefaultPazzaFolders } from "../pazza/defaultFolders.js";
 
 export default function CoursesDao() {
+  const quizzesDao = QuizzesDao();
   const findAllCourses = () =>
     model.find({}, { _id: 1, name: 1, description: 1 });
 
@@ -27,6 +29,7 @@ export default function CoursesDao() {
   const deleteCourse = async (courseId) => {
     await AssignmentModel.deleteMany({ course: courseId });
     await PazzaPostModel.deleteMany({ course: courseId });
+    await quizzesDao.deleteQuizzesForCourse(courseId);
     return model.deleteOne({ _id: courseId });
   };
 
