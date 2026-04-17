@@ -9,11 +9,11 @@ import AssignmentsRoutes from "./kambaz/assignments/routes.js";
 import CourseRoutes from "./kambaz/courses/routes.js";
 import EnrollmentsRoutes from "./kambaz/enrollments/routes.js";
 import ModulesRoutes from "./kambaz/modules/routes.js";
+import PazzaRoutes from "./kambaz/pazza/routes.js";
 import UserRoutes from "./kambaz/users/routes.js";
 
 const app = express();
-const CONNECTION_STRING =
-  process.env.DATABASE_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kambaz";
+const CONNECTION_STRING = process.env.DATABASE_CONNECTION_STRING;
 
 app.use(
   cors({
@@ -33,7 +33,6 @@ if (process.env.SERVER_ENV !== "development") {
   sessionOptions.cookie = {
     sameSite: "none",
     secure: true,
-    domain: process.env.SERVER_URL,
   };
 }
 
@@ -44,6 +43,7 @@ UserRoutes(app);
 CourseRoutes(app);
 EnrollmentsRoutes(app);
 ModulesRoutes(app);
+PazzaRoutes(app);
 AssignmentsRoutes(app);
 Lab5(app);
 Hello(app);
@@ -52,6 +52,9 @@ const port = process.env.PORT || 4000;
 
 async function startServer() {
   try {
+    if (!CONNECTION_STRING) {
+      throw new Error("DATABASE_CONNECTION_STRING is required.");
+    }
     await mongoose.connect(CONNECTION_STRING);
     app.listen(port, () => {
       console.log(`Kambaz server listening on port ${port}`);
