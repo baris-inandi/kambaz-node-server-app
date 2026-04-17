@@ -12,6 +12,11 @@ export default function EnrollmentsDao() {
     return enrollments.map((enrollment) => enrollment.user);
   };
 
+  const isUserEnrolledInCourse = async (userId, courseId) => {
+    const enrollment = await model.findOne({ user: userId, course: courseId });
+    return Boolean(enrollment);
+  };
+
   const enrollUserInCourse = async (userId, courseId) => {
     const existingEnrollment = await model.findOne({
       user: userId,
@@ -38,6 +43,7 @@ export default function EnrollmentsDao() {
     enrollUserInCourse,
     findCoursesForUser,
     findUsersForCourse,
+    isUserEnrolledInCourse,
     unenrollAllUsersFromCourse,
     unenrollUserFromCourse,
   };
