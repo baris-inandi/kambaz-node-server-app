@@ -2,6 +2,25 @@ import UsersDao from "./dao.js";
 
 export default function UserRoutes(app) {
   const dao = UsersDao();
+  const sessionCookieName = "kambaz.sid";
+  const sessionCookieOptions =
+    process.env.SERVER_ENV === "development"
+      ? {}
+      : {
+          sameSite: "none",
+          secure: true,
+        };
+
+  const destroySession = (req, res, status = 200) => {
+    req.session.destroy((error) => {
+      if (error) {
+        res.sendStatus(500);
+        return;
+      }
+      res.clearCookie(sessionCookieName, sessionCookieOptions);
+      res.sendStatus(status);
+    });
+  };
 
   app.get("/api/users", async (req, res) => {
     const { role, name } = req.query;
@@ -58,8 +77,7 @@ export default function UserRoutes(app) {
     }
     const refreshedUser = await dao.findUserById(currentUser._id);
     if (!refreshedUser) {
-      req.session.destroy(() => {});
-      res.sendStatus(401);
+      destroySession(req, res, 401);
       return;
     }
     req.session.currentUser = refreshedUser;
@@ -67,9 +85,7 @@ export default function UserRoutes(app) {
   });
 
   app.post("/api/users/signout", (req, res) => {
-    req.session.destroy(() => {
-      res.sendStatus(200);
-    });
+    destroySession(req, res);
   });
 
   app.put("/api/users/:userId", async (req, res) => {
@@ -92,7 +108,8 @@ export default function UserRoutes(app) {
       return;
     }
     if (req.session.currentUser?._id === req.params.userId) {
-      req.session.destroy(() => {});
+      destroySession(req, res);
+      return;
     }
     res.json(deletedUser);
   });

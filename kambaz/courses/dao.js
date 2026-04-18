@@ -7,6 +7,11 @@ import { cloneDefaultPazzaFolders } from "../pazza/defaultFolders.js";
 
 export default function CoursesDao() {
   const quizzesDao = QuizzesDao();
+  const normalizeCourseId = (courseId) =>
+    typeof courseId === "string" && courseId.trim()
+      ? courseId.trim()
+      : uuidv4();
+
   const findAllCourses = () =>
     model.find({}, { _id: 1, name: 1, description: 1 });
 
@@ -14,7 +19,7 @@ export default function CoursesDao() {
 
   const createCourse = (course) =>
     model.create({
-      _id: course._id ?? uuidv4(),
+      _id: normalizeCourseId(course._id),
       number: course.number ?? "",
       name: course.name ?? "",
       description: course.description ?? "",

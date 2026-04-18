@@ -2,6 +2,17 @@ import { v4 as uuidv4 } from "uuid";
 import model from "./model.js";
 
 export default function AssignmentsDao() {
+  const normalizeAssignmentId = (assignmentId) => {
+    if (typeof assignmentId !== "string") {
+      return uuidv4();
+    }
+    const trimmedId = assignmentId.trim();
+    if (!trimmedId || trimmedId === "new") {
+      return uuidv4();
+    }
+    return trimmedId;
+  };
+
   const findAssignmentsForCourse = (courseId) =>
     model.find({ course: courseId });
 
@@ -9,7 +20,7 @@ export default function AssignmentsDao() {
 
   const createAssignment = (assignment) =>
     model.create({
-      _id: assignment._id ?? uuidv4(),
+      _id: normalizeAssignmentId(assignment._id),
       course: assignment.course,
       title: assignment.title ?? "",
       description: assignment.description ?? "",

@@ -15,6 +15,14 @@ import UserRoutes from "./kambaz/users/routes.js";
 
 const app = express();
 const CONNECTION_STRING = process.env.DATABASE_CONNECTION_STRING;
+const isDevelopment = process.env.SERVER_ENV === "development";
+const sessionCookieName = "kambaz.sid";
+const sessionCookieOptions = isDevelopment
+  ? {}
+  : {
+      sameSite: "none",
+      secure: true,
+    };
 
 app.use(
   cors({
@@ -24,17 +32,15 @@ app.use(
 );
 
 const sessionOptions = {
+  name: sessionCookieName,
   secret: process.env.SESSION_SECRET || "kambaz",
   resave: false,
   saveUninitialized: false,
+  cookie: sessionCookieOptions,
 };
 
-if (process.env.SERVER_ENV !== "development") {
+if (!isDevelopment) {
   sessionOptions.proxy = true;
-  sessionOptions.cookie = {
-    sameSite: "none",
-    secure: true,
-  };
 }
 
 app.use(session(sessionOptions));
