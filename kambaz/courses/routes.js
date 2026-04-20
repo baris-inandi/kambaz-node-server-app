@@ -1,5 +1,11 @@
 import CoursesDao from "./dao.js";
 import EnrollmentsDao from "../enrollments/dao.js";
+import {
+  requireCourseUser,
+  requireFacultyUser,
+  requireSelfOrAdmin,
+  requireSignedInUser,
+} from "../auth.js";
 
 export default function CourseRoutes(app) {
   const dao = CoursesDao();
@@ -11,6 +17,11 @@ export default function CourseRoutes(app) {
   });
 
   app.get("/api/courses/:courseId", async (req, res) => {
+    const currentUser = await requireCourseUser(req, res, req.params.courseId);
+    if (!currentUser) {
+      return;
+    }
+
     const course = await dao.findCourseById(req.params.courseId);
     if (!course) {
       res.sendStatus(404);
@@ -20,15 +31,20 @@ export default function CourseRoutes(app) {
   });
 
   app.get("/api/users/:userId/courses", async (req, res) => {
+    const currentUser = requireSignedInUser(req, res);
+    if (!currentUser) {
+      return;
+    }
+
     let { userId } = req.params;
 
     if (userId === "current") {
-      const currentUser = req.session.currentUser;
-      if (!currentUser) {
-        res.sendStatus(401);
-        return;
-      }
       userId = currentUser._id;
+    }
+
+    const authorizedUser = requireSelfOrAdmin(req, res, userId);
+    if (!authorizedUser) {
+      return;
     }
 
     const courses = await enrollmentsDao.findCoursesForUser(userId);
@@ -42,14 +58,18 @@ export default function CourseRoutes(app) {
   });
 
   app.get("/api/courses/:cid/users", async (req, res) => {
+    const currentUser = await requireCourseUser(req, res, req.params.cid);
+    if (!currentUser) {
+      return;
+    }
+
     const users = await enrollmentsDao.findUsersForCourse(req.params.cid);
     res.json(users);
   });
 
   app.post("/api/users/current/courses", async (req, res) => {
-    const currentUser = req.session.currentUser;
+    const currentUser = requireFacultyUser(req, res);
     if (!currentUser) {
-      res.sendStatus(401);
       return;
     }
 
@@ -59,6 +79,11 @@ export default function CourseRoutes(app) {
   });
 
   app.post("/api/users/:uid/courses/:cid", async (req, res) => {
+    const currentUser = requireSelfOrAdmin(req, res, req.params.uid);
+    if (!currentUser) {
+      return;
+    }
+
     const status = await enrollmentsDao.enrollUserInCourse(
       req.params.uid,
       req.params.cid,
@@ -67,6 +92,11 @@ export default function CourseRoutes(app) {
   });
 
   app.delete("/api/users/:uid/courses/:cid", async (req, res) => {
+    const currentUser = requireSelfOrAdmin(req, res, req.params.uid);
+    if (!currentUser) {
+      return;
+    }
+
     const status = await enrollmentsDao.unenrollUserFromCourse(
       req.params.uid,
       req.params.cid,
@@ -75,6 +105,11 @@ export default function CourseRoutes(app) {
   });
 
   app.put("/api/courses/:courseId", async (req, res) => {
+    const currentUser = requireFacultyUser(req, res);
+    if (!currentUser) {
+      return;
+    }
+
     const updatedCourse = await dao.updateCourse(req.params.courseId, req.body);
     if (!updatedCourse) {
       res.sendStatus(404);
@@ -84,6 +119,11 @@ export default function CourseRoutes(app) {
   });
 
   app.delete("/api/courses/:courseId", async (req, res) => {
+    const currentUser = requireFacultyUser(req, res);
+    if (!currentUser) {
+      return;
+    }
+
     await enrollmentsDao.unenrollAllUsersFromCourse(req.params.courseId);
     const status = await dao.deleteCourse(req.params.courseId);
     res.json(status);

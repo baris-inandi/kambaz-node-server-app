@@ -1,4 +1,10 @@
 import UsersDao from "./dao.js";
+import {
+  isAdmin,
+  requireAdminUser,
+  requireSelfOrAdmin,
+  requireSignedInUser,
+} from "../auth.js";
 
 export default function UserRoutes(app) {
   const dao = UsersDao();
@@ -23,12 +29,22 @@ export default function UserRoutes(app) {
   };
 
   app.get("/api/users", async (req, res) => {
+    const currentUser = requireAdminUser(req, res);
+    if (!currentUser) {
+      return;
+    }
+
     const { role, name } = req.query;
     const users = await dao.findAllUsers(role, name);
     res.json(users);
   });
 
   app.get("/api/users/:userId", async (req, res) => {
+    const currentUser = requireSelfOrAdmin(req, res, req.params.userId);
+    if (!currentUser) {
+      return;
+    }
+
     const user = await dao.findUserById(req.params.userId);
     if (!user) {
       res.sendStatus(404);
@@ -38,6 +54,11 @@ export default function UserRoutes(app) {
   });
 
   app.post("/api/users", async (req, res) => {
+    const currentUser = requireAdminUser(req, res);
+    if (!currentUser) {
+      return;
+    }
+
     const user = await dao.createUser(req.body);
     res.json(user);
   });
@@ -89,6 +110,11 @@ export default function UserRoutes(app) {
   });
 
   app.put("/api/users/:userId", async (req, res) => {
+    const currentUser = requireSelfOrAdmin(req, res, req.params.userId);
+    if (!currentUser) {
+      return;
+    }
+
     const updatedUser = await dao.updateUser(req.params.userId, req.body);
     if (!updatedUser) {
       res.sendStatus(404);
@@ -102,6 +128,11 @@ export default function UserRoutes(app) {
   });
 
   app.delete("/api/users/:userId", async (req, res) => {
+    const currentUser = requireAdminUser(req, res);
+    if (!currentUser) {
+      return;
+    }
+
     const deletedUser = await dao.deleteUser(req.params.userId);
     if (!deletedUser) {
       res.sendStatus(404);
