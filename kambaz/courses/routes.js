@@ -78,6 +78,32 @@ export default function CourseRoutes(app) {
     res.json(newCourse);
   });
 
+  app.post("/api/users/current/courses/:cid", async (req, res) => {
+    const currentUser = requireSignedInUser(req, res);
+    if (!currentUser) {
+      return;
+    }
+
+    const status = await enrollmentsDao.enrollUserInCourse(
+      currentUser._id,
+      req.params.cid,
+    );
+    res.json(status);
+  });
+
+  app.delete("/api/users/current/courses/:cid", async (req, res) => {
+    const currentUser = requireSignedInUser(req, res);
+    if (!currentUser) {
+      return;
+    }
+
+    const status = await enrollmentsDao.unenrollUserFromCourse(
+      currentUser._id,
+      req.params.cid,
+    );
+    res.json(status);
+  });
+
   app.post("/api/users/:uid/courses/:cid", async (req, res) => {
     const currentUser = requireSelfOrAdmin(req, res, req.params.uid);
     if (!currentUser) {
