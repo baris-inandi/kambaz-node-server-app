@@ -49,7 +49,7 @@ export default function CourseRoutes(app) {
 
     const courses = await enrollmentsDao.findCoursesForUser(userId);
     res.json(
-      courses.map(({ _id, name, description }) => ({
+      courses.filter(Boolean).map(({ _id, name, description }) => ({
         _id,
         name,
         description,
